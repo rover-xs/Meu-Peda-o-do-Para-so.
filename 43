@@ -82,7 +82,8 @@
                 <div class="flex items-center justify-between h-20">
                     <div class="flex-shrink-0 flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-400" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10
+                                17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
                         </svg>
                         <h1 class="text-2xl md:text-3xl font-bold text-stone-800 font-cormorant">Meu Pedaço do Paraíso</h1>
                     </div>
@@ -138,7 +139,7 @@
                 <section id="dedicatoria" class="content-section min-h-screen hidden opacity-0">
                     <div class="bg-white p-8 sm:p-12 rounded-xl shadow-lg max-w-4xl mx-auto">
                         <h2 class="text-4xl font-bold font-cormorant text-center mb-6 text-pink-800">Dedicatória</h2>
-                         <img src="https://i.imgur.com/OyIzLxx.jpeg" alt="Imagem da dedicatória" class="w-43 h-43 rounded-full mx-auto shadow-lg object-cover">
+                         <img src="https://i.imgur.com/OyIzLxx.jpeg" alt="Imagem da dedicatória" class="w-42,5 h-42,5 rounded-full mx-auto shadow-lg object-cover">
                         <div class="w-24 h-px bg-pink-200 mx-auto mb-8"></div>
                         <div class="prose lg:prose-xl max-w-none text-stone-700 text-justify leading-relaxed">
                              <p>Esse livro é para você, Maria. A mulher que me fez enxergar o mundo de outra forma. A mulher que me desarmou apenas com um sorriso, que me encantou com um olhar, que me ganhou com sua presença e me consumiu por muitas vezes com sua ausência. Você foi o ponto de partida e o ponto de chegada. A origem e o destino. O amor e a confusão. Você foi o antes, o durante e o depois.</p>
