@@ -15,7 +15,8 @@
         /* Estilos personalizados */
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #FFFBF7; 
+            /* Cor de fundo pastel para não agredir os olhos */
+            background-color: #FDF9F3; /* Um tom de creme claro/marfim */
         }
         h1, h2, h3, h4, .font-cormorant {
             font-family: 'Cormorant Garamond', serif;
@@ -57,6 +58,67 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #E4AEC5;
         }
+
+        /* Estilos para os cards de capítulo flutuantes */
+        .chapter-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Ajustes para o modal em tela cheia (quase) */
+        #chapter-modal-content {
+            max-width: 95%; /* Quase largura total */
+            height: 95%;   /* Quase altura total */
+            margin: 0; /* Remover margens padrão para ocupar mais espaço */
+            padding: 2rem; /* Adicionar padding para conteúdo interno */
+            box-sizing: border-box; /* Incluir padding no tamanho total */
+        }
+
+        /* Botão de fechar estático */
+        #close-chapter-modal {
+            position: fixed; /* Fixa a posição do botão */
+            top: 1rem; /* Distância do topo */
+            right: 1rem; /* Distância da direita */
+            z-index: 51; /* Acima do conteúdo do modal */
+            background-color: rgba(255, 255, 255, 0.7); /* Fundo semi-transparente */
+            border-radius: 50%; /* Circular */
+            width: 40px; /* Largura */
+            height: 40px; /* Altura */
+            display: flex; /* Para centralizar o "x" */
+            align-items: center; /* Centralizar verticalmente */
+            justify-content: center; /* Centralizar horizontalmente */
+            cursor: pointer; /* Cursor de clique */
+            font-size: 2rem; /* Tamanho do "x" */
+            line-height: 1; /* Alinhamento da linha */
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            color: #stone-500; /* Cor padrão do X */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra para destaque */
+        }
+
+        #close-chapter-modal:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #D6336C; /* Cor de hover */
+        }
+
+        /* Ajustes específicos para dispositivos móveis */
+        @media (max-width: 767px) {
+            #chapter-modal-content {
+                max-width: 100%; /* Largura total em mobile */
+                height: 100%;   /* Altura total em mobile */
+                border-radius: 0; /* Sem bordas arredondadas em tela cheia */
+                padding: 1rem;
+            }
+            #close-chapter-modal {
+                top: 0.5rem;
+                right: 0.5rem;
+                font-size: 2.5rem; /* Aumentar o tamanho do 'x' */
+                width: 50px;
+                height: 50px;
+            }
+        }
     </style>
 </head>
 <body class="text-stone-700">
@@ -70,7 +132,7 @@
                 <input type="password" id="password-input" class="w-full px-4 py-2 text-center border-2 border-sky-200 rounded-lg focus:ring-2 focus:ring-sky-300 focus:border-sky-300 outline-none transition" placeholder="Senha">
                 <p id="error-message" class="text-red-500 text-sm h-5 mt-2"></p>
                 <button type="submit" class="w-full bg-sky-200 text-sky-800 font-bold py-3 px-4 rounded-lg hover:bg-sky-300 transition-colors duration-300 mt-4">
-                    Entre na Nossa História
+                    Entrar
                 </button>
             </form>
         </div>
@@ -141,7 +203,7 @@
                          <img src="https://i.imgur.com/OyIzLxx.jpeg" alt="Imagem da dedicatória" class="mx-auto my-8 rounded-lg shadow-md w-full max-w-xs h-auto object-cover">
                         <div class="w-24 h-px bg-pink-200 mx-auto mb-8"></div>
                         <div class="prose lg:prose-xl max-w-none text-stone-700 text-justify leading-relaxed">
-                             <p>Esse livro é para você, Maria. A mulher que me fez enxergar o mundo de outra forma. A mulher que me desarmou apenas com um sorriso, que me encantou com um olhar, que me ganhou com sua presença e me consumiu por muitas vezes com sua ausência. Você foi o ponto de partida e o ponto de chegada. A origem e o destino. O amor e a confusão. Você foi o antes, o durante e o depois.</p>
+                             <p>Esse livro é para você, Maria. A mulher que me fez enxergar o mundo de outra forma. A mulher que me desarmou apenas com um sorriso, que me encantou com um olhar, que me ganhou com sua presença e me consumiu por muitas vezes com sua ausência. Você foi o ponto de partida e o ponto de chegada. O origem e o destino. O amor e a confusão. Você foi o antes, o durante e o depois.</p>
                              <p>E se hoje escrevo para você, é porque você foi tudo que palavras não conseguem ser, mas que, ainda assim, tento transformar em poesia. Dedico este livro a você, porque foi por sua causa que descobri sentimentos que jamais imaginei sentir. Porque foi por sua causa que fui além de mim mesmo, que amei como nunca, que esperei, lutei, chorei e me entreguei com tudo o que eu tinha.</p>
                              <p>Você foi minha poesia na realidade. Minha oração viva. Minha fé com rosto. Você foi minha maior inspiração, minha maior luta e minha maior vitória. Este livro é seu. Porque foi você quem o escreveu em mim, dia após dia, beijo após beijo, em cada abraço, em cada renúncia. Ele vai tocar seu coração, assim como você tocou minha alma. Obrigado por transformar, em um olhar, o caos no paraíso.</p>
                         </div>
@@ -161,22 +223,22 @@
                     </div>
                 </section>
                 <section id="capitulos" class="content-section min-h-screen hidden opacity-0">
-                     <div class="bg-white p-8 sm:p-12 rounded-xl shadow-lg max-w-7xl mx-auto">
+                    <div class="bg-white p-8 sm:p-12 rounded-xl shadow-lg max-w-7xl mx-auto">
                         <h2 class="text-4xl font-bold font-cormorant text-center mb-6 text-pink-800">Capítulos</h2>
                         <div class="w-24 h-px bg-pink-200 mx-auto mb-8"></div>
-                        <div class="lg:grid lg:grid-cols-4 lg:gap-8">
-                            <aside class="lg:col-span-1 mb-8 lg:mb-0">
-                                <div class="sticky top-24">
-                                    <h3 class="text-2xl font-cormorant font-semibold mb-4 border-b-2 border-pink-100 pb-2">Sumário</h3>
-                                    <ul id="chapter-list" class="space-y-1 h-96 overflow-y-auto pr-2"></ul>
-                                </div>
-                            </aside>
-                            <div id="chapter-content-area" class="lg:col-span-3 lg:border-l lg:border-pink-100 lg:pl-8 h-96 overflow-y-auto">
-                                <div id="chapter-placeholder" class="flex flex-col items-center justify-center h-full text-center text-stone-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4 text-pink-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                                    <h3 class="text-3xl font-cormorant mt-2">Selecione um capítulo</h3>
-                                    <p class="mt-2 font-light">Clique em um dos capítulos da lista para iniciar a leitura.</p>
-                                </div>
+                        
+                        <!-- Grid para os cards de capítulos -->
+                        <div id="chapters-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <!-- Os cards dos capítulos serão inseridos aqui via JavaScript -->
+                        </div>
+
+                        <!-- Modal/Overlay para o conteúdo do capítulo -->
+                        <div id="chapter-modal-overlay" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-0 z-50 hidden opacity-0 transition-opacity duration-300">
+                            <!-- O botão de fechar foi movido para cá -->
+                            <button id="close-chapter-modal" class="text-stone-500 hover:text-stone-800">&times;</button>
+                            <div id="chapter-modal-content" class="bg-white p-8 rounded-xl shadow-2xl max-w-3xl w-full h-4/5 overflow-y-auto relative transform scale-95 opacity-0 transition-all duration-300 ease-out">
+                                <h3 id="modal-chapter-title" class="text-3xl font-bold font-cormorant mb-4 text-pink-900"></h3>
+                                <div id="modal-chapter-text" class="prose prose-lg max-w-none text-stone-700 text-justify leading-relaxed"></div>
                             </div>
                         </div>
                     </div>
@@ -245,10 +307,10 @@
 
         const chapterDataContainer = document.getElementById('chapter-texts');
 
-        // Conteúdo dos capítulos
+        // Conteúdo dos capítulos (mantido o mesmo para a seção de texto)
         chapterDataContainer.innerHTML = `
              <div id="cap1-text"><p>Lá estava eu, um gerente de vendas focado em meu cotidiano corrido e complexo, repleto de desafios e estresse enraizado no mérito do cargo, um trabalho que traz a carga necessária para que eu sequer olhasse para os lados. Como gestor, eu liderava uma equipe grande de vendedores e, dentre todos os funcionários, havia uma garota recém-contratada que, logo, eu buscaria incessantemente tê-la para mim.</p><p>É estranho explicar isso, mas eu realmente não sei como tudo aconteceu. Acho que meu inconsciente sempre a buscou e pensou nela, sobre “nós”, mas, lá atrás, tínhamos vidas distintas, com planos e caminhos bem opostos. A única coisa que nos deixava próximos era justamente o trabalho; ficávamos “juntos” por volta de oito horas por dia, apesar de muitas vezes estarmos em pontos de vendas separados.</p><p>Como eu era o gerente, procurava, de forma não pensada, estar próximo de Maria. Creio que meu subconsciente ficava pensando no "e se...". E, mais que de repente, eu já procurava me manter afastado de qualquer linha que me levasse para longe da Maria. Busquei caminhos de aproximação cada vez mais, deixando de lado coisas que, no futuro, me complicassem com ela ou que atrapalhassem, caso um dia eu quisesse tentar algo. Mesmo assim, ainda não sentia nada, somente respeito e admiração por, pela profissional exemplar que era.</p><p>Logo comecei a querer cuidá-la. Agora meus feedbacks gerenciais puxavam informações pessoais da vendedora e eu trabalhava em cada detalhe, tentando ajudar sempre que possível, especialmente com conselhos pessoais. Lembro-me de que a equipe, normalmente em conversas paralelas, concordava com meus argumentos — sempre fui muito persuasivo. Entretanto, um dia, quando eu estava conversando sobre algum assunto sensível com outra pessoa, Maria entrou na conversa e disse que não concordava comigo. Eu fiquei incrédulo com o que tinha ouvido, porque estava acostumado com a maioria sempre concordando, e a conversa também não estava direcionada a ela... mas eu gostei daquilo. Talvez tenha sido daí que todo o universo começou a me fazer pensar nela, lá dentro do subconsciente.</p><p>Logo comecei a perceber que, quando eu pegava o mesmo ônibus que ela, eu me sentia mais feliz. Se sentássemos um ao lado do outro, mais feliz ainda. Comecei a tramar para que tivéssemos mais encontros por “coincidência”. Chamei todo mundo na minha casa para comer um "podrão" e só fiz isso para ver se ela ia também — e deu certo. Em outro dia, chamei-a no final do expediente para irmos só nós dois ao "podrão"; conversamos e comemos muito lá, e eu amei sua companhia.</p><p>Com o tempo, as coisas começaram a ficar mais claras. Ela certamente não pensava em mim e eu também não pensava conscientemente nela como algo a mais, mesmo porque tínhamos nossas vidas fora do trabalho. Ela ficava com outros e com outras (nada sério). Logo, me senti atraído pela figura que Maria Eduarda passou a ser para mim. Através do conhecimento sobre ela, comecei a talvez sentir algo a mais, um sentimento não tão claro, cheio de confusão, no entanto, com a certeza absoluta de que a sua presença me fazia muito bem.</p><p>Sim, eu poderia chegar, falar e resolver logo tudo para o "sim" ou para o "não", mas havia outras questões envolvidas. A maior delas era que Maria era minha vendedora. A outra é que ela era uma boa pessoa e, na época, eu não procurava boas pessoas, porque não queria me relacionar seriamente nem tão cedo. E se eu chegasse nela só para tê-la por um momento, eu a magoaria. Tinha a opção de receber o "não" também, e, de uma forma ou de outra, ficaria um clima péssimo no trabalho. Por isso não avancei.</p><p>Houve momentos em que pude perceber o sentimento, mesmo que de forma rasa. Por exemplo, evitei falar para ela sobre meu caso com uma ficante, recusei amizade com possíveis ficantes dela e não aceitei ficar com uma pessoa próxima dela também, tudo para que nada me atrapalhasse em linhas futuras.</p><p>E foi assim que olhei para dentro de mim e percebi que, indiretamente, estava criando caminhos para um possível futuro com ela. Estava, ao longo do tempo, construindo pontes para chegar até a Maria, e isso me assustou um pouco: saber que tinha algo ali que, inclusive, estava sendo maquinado por mim sem que eu nem tomasse consciência disso.</p></div>
-            <div id="cap2-text"><p>Todas as vezes que eu tinha um tempo com a Maria, buscava conversar bastante com ela sobre sua vida, seus gostos, costumes, tudo. E, sem perceber, fui admirando-a; ela me puxava cada vez mais para perto, mesmo sem se dar conta disso. Aos poucos, meu olhar foi mudando, meu cuidado, minhas mensagens de final de mês parabenizando por metas atingidas já não eram só profissionais.</p><p>Me dediquei a conhecê-la melhor no lado pessoal e fiquei impressionado com tudo que ela fazia em seu dia a dia e ainda conseguia ser uma ótima profissional, sempre fazendo tudo com muita excelência. Ela fazia CrossFit, faculdade de Fisioterapia, cursos de massagem, inglês, tirava fotos e estava na igreja quase todos os dias. E não parava por aí: Maria ainda fazia ações beneficentes e sonhava em ajudar cada vez mais as pessoas.</p><p>Eu pensava: como pode? Além de tudo que faz, ainda é simpática, dona de um sorriso lindo, olhos cativantes, voz doce. Ela é extremamente linda em cada traço que pude ver, temente a Deus e mais uma montanha de outros bons adjetivos (sobre os quais falarei depois). E quando parei para reparar nisso, já estava fascinado por ela. Foi algo inconsciente e muito rápido, rápido o suficiente para logo tomar minha frente.</p></div>
+            <div id="cap2-text"><p>Todas as vezes que eu tinha um tempo com a Maria, buscava conversar bastante com ela sobre sua vida, seus gostos, costumes, tudo. E, sem perceber, fui admirando-la; ela me puxava cada vez mais para perto, mesmo sem se dar conta disso. Aos poucos, meu olhar foi mudando, meu cuidado, minhas mensagens de final de mês parabenizando por metas atingidas já não eram só profissionais.</p><p>Me dediquei a conhecê-la melhor no lado pessoal e fiquei impressionado com tudo que ela fazia em seu dia a dia e ainda conseguia ser uma ótima profissional, sempre fazendo tudo com muita excelência. Ela fazia CrossFit, faculdade de Fisioterapia, cursos de massagem, inglês, tirava fotos e estava na igreja quase todos os dias. E não parava por aí: Maria ainda fazia ações beneficentes e sonhava em ajudar cada vez mais as pessoas.</p><p>Eu pensava: como pode? Além de tudo que faz, ainda é simpática, dona de um sorriso lindo, olhos cativantes, voz doce. Ela é extremamente linda em cada traço que pude ver, temente a Deus e mais uma montanha de outros bons adjetivos (sobre os quais falarei depois). E quando parei para reparar nisso, já estava fascinado por ela. Foi algo inconsciente e muito rápido, rápido o suficiente para logo tomar minha frente.</p></div>
             <div id="cap3-text"><p>Em algumas conversas, ela pediu para ir trabalhar comigo no outro PDV (ponto de venda) em que eu ficava mais tempo. Estava extremamente carinhosa comigo, deu-me alguns abraços, e daí reforcei meu sentimento de estar me sentindo atraído. Aceitei colocá-la no quiosque e, a partir disso, comecei o processo de aproximação.</p><p>Ela já estava no quiosque comigo, sua folga era junto com a minha, o horário o mesmo também. Começamos a conversar muito mais. Algumas vezes, nossos olhos se encontravam de forma diferente de como costumava ser. Ela foi chegando cada vez mais perto de mim, brincando, sorrindo, às vezes até sem maldade, mas isso aflorou uma atração sem precedentes por ela.</p><p>Fiquei com medo a partir daí, mas não parei. Fiz de tudo para chegar mais perto, me ofereci para levá-la todos os dias de moto. Para isso, comprei um capacete novo, uma bag pequena para pilotar mais confortável com ela. Comprei perfume de acordo com a escolha dela, comprei algumas coisas para ficar mais apresentável no dia a dia e até tênis para treinar CrossFit com ela.</p></div>
             <div id="cap4-text"><p>Tivemos algumas conversas primordiais para o desenrolar da história. Uma vez, no posto de combustível, perguntei sobre o ficante dela e se ela ficava com mais alguém. Ela disse que não, que não tinha paciência para ficar com mais ninguém, nem tempo para isso, e que também não pensava em namorar.</p><p>Entendi isso como um fora e decidi me afastar. Depois de um tempo, voltamos a tocar no mesmo assunto e ela retificou o que havia dito antes, dizendo que "dependia". Dessa forma, achei que eu poderia continuar tentando me aproximar mais e conquistá-la aos poucos, tomando-a para mim. Eu, automaticamente, não quis mais ficar com a garota com quem eu havia ficado e recusei encontros por aplicativo. Mesmo nada estando certo — na verdade, bem longe disso —, eu decidi focar nela.</p><p>Ainda estava tudo meio confuso, nada falado, e as trocas de olhares se tornaram cada vez mais comuns. Um encostava no outro meio que sem querer no PDV, ficávamos muito próximos, saíamos muito juntos, gerando até comentários dos nossos colegas de trabalho, que achavam que estávamos ficando (antes fosse verdade).</p><p>Um dia, tive a coragem de falar um pouco mais. Falei para ela que gostava dela, mais do que o normal, mais do que deveria. Perguntei se ela entendia, e ela disse que sim. Perguntei se era recíproco e ela também disse que sim. A partir daí, comecei a me imaginar muito com ela, a tramar palavras, posturas, atitudes, e sonhava quase todas as noites conosco. Chegamos até a marcar de assistir a um filme em minha casa, como amigos.</p><p>Diante de tudo que vinha acontecendo, do carinho mútuo, de alguns resquícios de reciprocidade e de mais de dois anos tentando trazê-la para mais perto, criei coragem para me declarar para a Maria, ser direto. Então, quando ela me chamou para ir tomar um chocolate, fui mais direto do que imaginaria. Não era para ser tanto, mas ela ficou pedindo para que eu falasse, para que eu me expressasse.</p><p>Soltei tudo que estava entalado na garganta. Falei que eu gostava muito dela, que na verdade eu era louco por ela, que estava fissurado, fascinado, obcecado. Que eu pensava nela todos os dias e em todas as noites a encontrava nos meus sonhos. Que sentia vontade dela, desejava a todo momento estar com ela. Eu já havia beijado a boca dela dezenas de vezes em meus pensamentos e nos meus sonhos.</p><p>Dito isso, as coisas não aconteceram da forma como eu esperava. Ela, apesar de dizer que também me queria, deixou notável que estava dividida e disse que pensava muito no futuro, que não sabia o que poderia acontecer se ficássemos e que não queria ficar só por ficar, que queria algo a mais, algo sério para o momento. Mas que "super ficaria" comigo se não estivesse nesse momento e que partilhava das mesmas vontades e desejos por mim.</p><p>Eu respondi que queria tudo com ela, o que ela permitisse: seja só ficar, um rolo, algo mais sério, um namoro, um casamento, qualquer coisa. Eu só queria estar com ela. Ficou um clima meio estranho. Ela agradeceu por eu ter me expressado e, em seguida, desmarcou o filme que íamos assistir na minha casa, dizendo que agora ia pensar sobre o assunto. Fiquei triste com isso, parecia que eu não tinha tomado a melhor decisão, mas entendi.</p><p>Pois bem, ela pensou bastante sobre o filme e, três dias depois, perguntei sobre a resposta. Ela disse que não iria por não confiar nela mesma de estar sozinha comigo e por medo de tudo que poderia acontecer depois que ela cedesse ao momento. Perguntei se teria algo que eu pudesse fazer para ela mudar sua decisão. Ela disse que talvez e que não sabia. Eu entendi e fiquei realmente mal nesse dia.</p><p>Era final de expediente e eu só queria ir embora. Fui até a saída para respirar um pouco (mais de uma vez), me achei um tremendo idiota por insistir nisso. Estava claro nos olhos, nas palavras e nas atitudes dela que ela também me queria, mas estava com medo de algo. Quando fui embora, corri muito com a moto, fiquei muito triste durante o trajeto, com muita raiva de mim e com dó ao mesmo tempo, um sentimento nem um pouco agradável.</p><p>No dia seguinte em que nos vimos no trabalho, ela jogou uma indireta, dizendo que eu não falava mais com ela. Eu falei para ela parar de bobeira, agi normalmente durante o dia e começamos a flertar de novo. Perguntei se ela queria que eu parasse e ela disse que não.</p><p>Então, assim se deu: não consegui resistir mais uma vez. Os olhos dela me ganhavam, quando chegava perto da sua pele eu me arrepiava. Às vezes nos tocávamos e me dava uma vontade surreal de tê-la para mim, algo inexplicável e que não lembro de já ter sentido.</p></div>
             <div id="cap5-text"><p>Preciso respirar fundo para escrever sobre isso, pois passei por uma das sensações mais prazerosas neste dia. Bom, chamei-a para ir tomar um chocolate. Sentamos no fundo de uma chocolataria e, enquanto ela comia fondue, eu me declarava. Ela me olhava, e eu podia ver em seus olhos o quanto ela me queria. O tempo parecia parar quando um olhava para o outro.</p><p>Chegamos mais perto, ela ficou um pouco de lado e foi a primeira vez que ficamos realmente abraçados. Sentir o corpo dela encostado no meu peito e poder passar a mão firme pelas suas costas foi surreal, não pelo ato, mas pela conexão incomparável. Sussurrei algumas coisas no ouvido dela, cheirei-a, beijei sua bochecha, cheguei bem perto da boca, mas não tentei nada, e ela se afastou, dizendo que estava ficando “desconfortável”.</p><p>Tudo isso era muito bom, mas eu realmente precisava de uma resposta, pois aquilo começou a me fazer mal, já que não saíamos do flerte. Então, decidi pôr um fim em tudo ou continuar até conseguir. Para isso, eu precisava saber exatamente o que ela queria comigo, e foi isso que fiz. Chamei-a para conversar lá no posto de combustível, sentamos e conversamos. Expliquei de que forma aquilo estava me fazendo mal, reforcei meus sentimentos e minhas intenções com ela. Por fim, perguntei o que exatamente ela queria comigo: se queria algo maior, se realmente me queria ou se queria ficar somente flertando sem fim.</p><p>Ela disse que gostava de mim e pediu para que continuássemos até ela realmente se decidir. Explicou que estava, sim, com muitas dúvidas, que também gostava de um rapaz com quem ela estava ficando. Além disso, tinha as questões do trabalho, pois as pessoas já estavam a perseguindo só por achar que estávamos juntos, sendo que não estávamos.</p><p>Eu disse que entendi, a chamei para assistir a um filme no cinema e ela aceitou. Eu disse que logo lançaria Missão Impossível – Acerto de Contas no streaming, e perguntei se era para eu esperar para assistirmos juntos em minha casa ou não. Ela disse para eu esperar. Fiquei feliz com a conversa franca. Ela não sabia sobre suas decisões ainda, e eu já tinha tudo acertado em minha mente e no coração. Não me importava com o trabalho nem com as pessoas, estava totalmente disposto a tê-la só para mim, e seguimos nos desejando a todo momento, muitas vezes sem nem poder nos tocar, devido ao ambiente de trabalho.</p></div>
@@ -332,10 +394,14 @@
         });
 
         // Lógica dos Capítulos
-        const chapterList = document.getElementById('chapter-list');
-        const chapterContentArea = document.getElementById('chapter-content-area');
+        const chaptersGrid = document.getElementById('chapters-grid');
+        const chapterModalOverlay = document.getElementById('chapter-modal-overlay');
+        const chapterModalContent = document.getElementById('chapter-modal-content');
+        const modalChapterTitle = document.getElementById('modal-chapter-title');
+        const modalChapterText = document.getElementById('modal-chapter-text');
+        const closeChapterModal = document.getElementById('close-chapter-modal');
         
-        // Dados dos capítulos, incluindo IDs e títulos
+        // Dados dos capítulos, incluindo IDs e títulos formatados para exibição
         const chapters = [
             { id: 1, title: 'Como Nasceu o Sentimento pela Maria Eduarda' },
             { id: 2, title: 'Admiração Inconsciente' },
@@ -343,65 +409,87 @@
             { id: 4, title: 'Conversas Difíceis' },
             { id: 5, title: 'Um Abraço em que se Sente o Mundo' },
             { id: 6, title: 'Praça XV' },
-            { id: 7, title: 'Pontos Negativos da Maria – <span class="text-sm italic">[anotações]</span>' },
-            { id: 8, title: 'Pontos Positivos da Maria – <span class="text-sm italic">[anotações]</span>' },
+            { id: 7, title: 'Pontos Negativos da Maria', subtitle: '<span class="text-sm italic">[anotações]</span>' },
+            { id: 8, title: 'Pontos Positivos da Maria', subtitle: '<span class="text-sm italic">[anotações]</span>' },
             { id: 9, title: 'O Sonho' },
-            { id: 10, title: 'O Pesadelo (Fim) – <span class="text-sm italic">[diário]</span>' },
+            { id: 10, title: 'O Pesadelo (Fim)', subtitle: '<span class="text-sm italic">[diário]</span>' },
             { id: 11, title: 'O Que Fica e o Que Não Fica?' },
-            { id: 12, title: 'Mas, “E Se”... – <span class="text-sm italic">[poesia]</span>' },
+            { id: 12, title: 'Mas, “E Se”...', subtitle: '<span class="text-sm italic">[poesia]</span>' },
             { id: 13, title: 'Como Dizer Adeus?' },
-            { id: 14, title: 'Em Outras Vidas – <span class="text-sm italic">[conto]</span>' },
-            { id: 15, title: 'Como Eu Queria... – <span class="text-sm italic">[diário]</span>' },
-            { id: 16, title: 'Você Já é Minha – <span class="text-sm italic">[poesia]</span>' },
-            { id: 17, title: 'Um Encostar de Lábios – <span class="text-sm italic">[19/02/2024]</span>' },
-            { id: 18, title: 'Primeiro Beijo – <span class="text-sm italic">[23/02/2024]</span>' },
-            { id: 19, title: 'De Corpo e Alma – <span class="text-sm italic">[14/03/2024]</span>' },
-            { id: 20, title: 'Adrenalina – <span class="text-sm italic">[15 e 16/03/2024]</span>' },
+            { id: 14, title: 'Em Outras Vidas', subtitle: '<span class="text-sm italic">[conto]</span>' },
+            { id: 15, title: 'Como Eu Queria...', subtitle: '<span class="text-sm italic">[diário]</span>' },
+            { id: 16, title: 'Você Já é Minha', subtitle: '<span class="text-sm italic">[poesia]</span>' },
+            { id: 17, title: 'Um Encostar de Lábios', subtitle: '<span class="text-sm italic">[19/02/2024]</span>' },
+            { id: 18, title: 'Primeiro Beijo', subtitle: '<span class="text-sm italic">[23/02/2024]</span>' },
+            { id: 19, title: 'De Corpo e Alma', subtitle: '<span class="text-sm italic">[14/03/2024]</span>' },
+            { id: 20, title: 'Adrenalina', subtitle: '<span class="text-sm italic">[15 e 16/03/2024]</span>' },
             { id: 21, title: 'A Viagem' },
             { id: 22, title: 'O Afastamento' },
             { id: 23, title: 'O Retiro Espiritual (Término)' },
             { id: 24, title: 'YOU' },
-            { id: 25, title: 'Juntos Oficialmente – <span class="text-sm italic">[09/01/2025]</span>' },
+            { id: 25, title: 'Juntos Oficialmente', subtitle: '<span class="text-sm italic">[09/01/2025]</span>' },
             { id: 26, title: 'Momentos' },
             { id: 27, title: 'O Pedido' },
             { id: 28, title: 'A Demissão' },
-            { id: 29, title: 'Minha Namorada <span class="text-sm italic">[13/06/2025]</span>' },
-            { id: 30, title: 'Meu Pedaço do Paraíso <span class="text-sm italic">[poesia]</span>' }
+            { id: 29, title: 'Minha Namorada', subtitle: '<span class="text-sm italic">[13/06/2025]</span>' },
+            { id: 30, title: 'Meu Pedaço do Paraíso', subtitle: '<span class="text-sm italic">[poesia]</span>' }
         ];
 
-        // Popula a lista de capítulos no sumário
-        chapterList.innerHTML = ''; // Clear existing list
+        // Popula a grade de capítulos com cards
         chapters.forEach(chapter => {
-            const li = document.createElement('li');
-            li.innerHTML = `<a href="#" data-chapter-id="${chapter.id}" class="chapter-link block p-2 rounded-md text-stone-600 hover:bg-pink-100 hover:text-pink-800 transition-colors duration-200">${chapter.id}. ${chapter.title}</a>`;
-            chapterList.appendChild(li);
+            const chapterCard = document.createElement('div');
+            chapterCard.dataset.chapterId = chapter.id; // Define o ID do capítulo como um atributo de dados
+            chapterCard.classList.add('chapter-card', 'bg-pink-50', 'p-6', 'rounded-lg', 'shadow-md', 'cursor-pointer', 'text-center', 'hover:bg-pink-100', 'flex', 'flex-col', 'justify-between');
+            
+            let displayTitle = chapter.title;
+            if (chapter.subtitle) {
+                displayTitle += ` ${chapter.subtitle}`; // Adiciona o subtítulo, se existir
+            }
+
+            chapterCard.innerHTML = `
+                <h3 class="text-xl font-cormorant font-semibold text-pink-800 mb-2">${chapter.id}. ${chapter.title}</h3>
+                ${chapter.subtitle ? `<p class="text-sm text-pink-600">${chapter.subtitle}</p>` : ''}
+            `;
+            chaptersGrid.appendChild(chapterCard);
         });
         
-        // Adiciona event listener para cliques na lista de capítulos
-        chapterList.addEventListener('click', function(e) {
-            e.preventDefault(); // Previne o comportamento padrão do link
-            const targetLink = e.target.closest('.chapter-link'); // Encontra o link do capítulo clicado
-            if (!targetLink) return; // Retorna se não for um link de capítulo
+        // Adiciona event listener para cliques nos cards de capítulos
+        chaptersGrid.addEventListener('click', function(e) {
+            const targetCard = e.target.closest('.chapter-card'); // Encontra o card de capítulo clicado
+            if (!targetCard) return; // Retorna se não for um card de capítulo
 
-            // Remove a classe 'active' de todos os links de capítulo e adiciona ao clicado
-            document.querySelectorAll('.chapter-link').forEach(link => link.classList.remove('active'));
-            targetLink.classList.add('active');
-
-            const chapterId = targetLink.dataset.chapterId; // Obtém o ID do capítulo
+            const chapterId = targetCard.dataset.chapterId; // Obtém o ID do capítulo
             const chapterTextSource = document.getElementById(`cap${chapterId}-text`); // Obtém o conteúdo do capítulo
             const chapterData = chapters.find(c => c.id == chapterId); // Encontra os dados do capítulo pelo ID
             
-            chapterContentArea.innerHTML = ''; // Limpa a área de conteúdo do capítulo
             if (chapterData && chapterTextSource) {
-                // Insere o título e o conteúdo do capítulo na área de exibição
-                chapterContentArea.innerHTML = `
-                    <h3 class="text-3xl font-bold font-cormorant mb-6 text-pink-900">${chapterData.title}</h3>
-                    <div class="prose prose-lg max-w-none text-stone-700 text-justify leading-relaxed">${chapterTextSource.innerHTML}</div>`;
+                let fullTitle = chapterData.title;
+                if (chapterData.subtitle) {
+                    fullTitle += ` ${chapterData.subtitle}`;
+                }
+                modalChapterTitle.innerHTML = fullTitle; // Define o título do modal
+                modalChapterText.innerHTML = chapterTextSource.innerHTML; // Define o conteúdo do modal
+                
+                // Exibe o modal com transição
+                chapterModalOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    chapterModalOverlay.classList.remove('opacity-0');
+                    chapterModalContent.classList.remove('opacity-0', 'scale-95');
+                }, 50);
+                chapterModalContent.scrollTop = 0; // Volta ao topo do conteúdo do modal
             }
-            chapterContentArea.scrollTop = 0; // Volta ao topo da área de conteúdo do capítulo
         });
 
-        // Lógica dos Timers
+        // Adiciona event listener para fechar o modal
+        closeChapterModal.addEventListener('click', () => {
+            chapterModalOverlay.classList.add('opacity-0');
+            chapterModalContent.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                chapterModalOverlay.classList.add('hidden');
+            }, 300); // Oculta o modal após a transição
+        });
+
+        // Lógica dos Timers (mantida a mesma)
         /**
          * Calcula o tempo decorrido desde uma data de início até o momento atual.
          * @param {string} startDate A data de início no formato ISO 8601 (ex: "AAAA-MM-DDTHH:mm:ss").
